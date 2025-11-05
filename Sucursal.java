@@ -5,7 +5,6 @@ public class Sucursal {
     private String tipoSede;
     private String direccion;
     private List<Facultad> facultades;
-
     public Sucursal(String nombre, String tipoSede, String direccion) {
         this.nombre = nombre;
         this.tipoSede = tipoSede;
@@ -36,7 +35,6 @@ public class Sucursal {
         }
         return null;
     }
-
     public void listarFacultades() {
         System.out.println("Facultades en la sucursal " + nombre + ":");
         for (Facultad f : facultades) {
