@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+public class Sucursal {
+    private String nombre;
+    private String tipoSede;
+    private String direccion;
+    private List<Facultad> facultades;
+
+    public Sucursal(String nombre, String tipoSede, String direccion) {
+        this.nombre = nombre;
+        this.tipoSede = tipoSede;
+        this.direccion = direccion;
+        this.facultades = new ArrayList<>();
+    }
+    public boolean agregarFacultad(Facultad facultad) {
+        if (!facultades.contains(facultad)) {
+            facultades.add(facultad);
+            return true;
+        }
+        return false;
+    }
+    public boolean eliminarFacultad(String nombre) {
+        for (Facultad f : facultades) {
+            if (f.getNombre().equalsIgnoreCase(nombre)) {
+                facultades.remove(f);
+                return true;
+            }
+        }
+        return false;
+    }
+    public Facultad buscarFacultad(String nombre) {
+        for (Facultad f : facultades) {
+            if (f.getNombre().equalsIgnoreCase(nombre)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    public void listarFacultades() {
+        System.out.println("Facultades en la sucursal " + nombre + ":");
+        for (Facultad f : facultades) {
+            System.out.println(" - " + f.getNombre());
+        }
+    }
+    public void mostrarInformacion() {
+        System.out.println("Sucursal: " + nombre);
+        System.out.println("Tipo de sede: " + tipoSede);
+        System.out.println("Dirección: " + direccion);
+        System.out.println("Número de facultades: " + facultades.size());
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public String getTipoSede() {
+        return tipoSede;
+    }
+    public String getDireccion() {
+        return direccion;
+    }
+    public List<Facultad> getFacultades() {
+        return facultades;
+    }
+}
