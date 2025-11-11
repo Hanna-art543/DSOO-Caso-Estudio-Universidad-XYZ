@@ -12,7 +12,7 @@ class PreRequisito {
         this.cursoRequerido = cursoRequerido;
     }
 
-    //GETTERS Y SETTERS
+    //GETTERS 
     public String getID() {
         return id;
     }
@@ -23,15 +23,18 @@ class PreRequisito {
         return cursoRequerido;
     }
     
-    public boolean verificarCumplimiento (Alumno a) {
-        double nota = a.obtenerNota(cursoRequerido);
-        return nota >= notaMinima;
+    public boolean verificarCumplimiento(Alumno a) {
+        Nota notaDelCurso = a.obtenerNotaCurso(this.cursoRequerido);
+        if (notaDelCurso == null) {
+            return false; // No ha llevado el curso
+        }
+        return notaDelCurso.getValor() >= this.notaMinima;
     }
 
     public void mostrarInformacion () {
-        System.out.println("\nInformación" +
+        System.out.println("\nPre-Requisito" +
         "\nID: " + this.id + 
-        "\nNota mínima: " + this.notaMinima +
-        "\\nCurso Requerido: " + this.cursoRequerido);
+        "\nCurso Requerido: " + this.cursoRequerido +
+        "\nNota mínima: " + this.notaMinima);
     }
 }
