@@ -1,122 +1,87 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Alumno {
-    
-    // --- Atributos ---
-    private int CUI;
+    private int cui;
+    private String nombre;
     private String email;
-    // Este mapa es clave: relaciona un Curso con la Nota final del alumno en ESE curso
-    private Map<Curso, Nota> notas; 
+    private Map<Curso, Nota> cursos;
     private Carrera carrera;
 
-    // --- Constructor ---
-    public Alumno(int CUI, String email, Carrera carrera) {
-        this.CUI = CUI;
+    public Alumno(int cui, String nombre, String email) {
+        this.cui = cui;
+        this.nombre = nombre;
         this.email = email;
-        this.carrera = carrera;
-        this.notas = new HashMap<>(); // Inicializar el mapa de notas
+        this.cursos = new HashMap<>();
     }
 
-    // --- Getters y Setters (Ejemplo) ---
-    public int getCUI() {
-        return CUI;
+    public boolean matricularCurso(Curso c) {
+        if (!this.cursos.containsKey(c)) {
+            this.cursos.put(c, new Nota(0.0)); // Inicia con nota 0
+            return true;
+        }
+        return false; // Ya estaba matriculado
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    // --- Métodos del Diagrama ---
-
-    /**
-     * Matricula al alumno en un curso.
-     * Añade el curso al mapa de notas, inicialmente sin nota.
-     */
-    public void matricular(Curso c) {
-        if (!notas.containsKey(c)) {
-            notas.put(c, null); // O se podría poner una Nota por defecto (ej. new Nota(0))
-            System.out.println("Alumno " + CUI + " matriculado en " + c.getNombre());
+    public void registrarNota(Curso c, double valorNota) {
+        Nota nota;
+        if (this.cursos.containsKey(c)) {
+            nota = this.cursos.get(c);
+            nota.asignarValor(valorNota);
         } else {
-            System.out.println("El alumno ya está matriculado en " + c.getNombre());
+            nota = new Nota(valorNota);
+            this.cursos.put(c, nota);
+        }
+        // Registra la nota en el curso para el promedio del curso
+        c.agregarNota(nota);
+    }
+
+    public double calcularPromedioGeneral() {
+        if (cursos.isEmpty()) return 0.0;
+        double suma = 0;
+        for (Nota n : cursos.values()) {
+            suma += n.getValor();
+        }
+        return suma / cursos.size();
+    }
+
+    public Nota obtenerNotaCurso(Curso c) {
+        return this.cursos.get(c);
+    }
+
+    public void listarCursos() {
+        System.out.println("Cursos matriculados por " + nombre + ":");
+        for (Curso c : cursos.keySet()) {
+            System.out.println(" - " + c.getNombre() + " (Nota: " + cursos.get(c).getValor() + ")");
         }
     }
 
-    /**
-     * Registra o actualiza la nota de un curso en el que el alumno está matriculado.
-     */
-    public void registrarNota(Curso c, Nota n) {
-        if (notas.containsKey(c)) {
-            notas.put(c, n); // Asigna el objeto Nota al Curso
-            System.out.println("Nota registrada para el curso " + c.getNombre());
-        } else {
-            System.out.println("Error: El alumno no está matriculado en " + c.getNombre());
-        }
-    }
-
-    /**
-     * Calcula el promedio general del alumno basado en las notas de todos sus cursos.
-     */
-    public double promedioGeneral() {
-        if (notas.isEmpty()) {
-            return 0.0;
-        }
-
-        double sumaTotal = 0.0;
-        int cursosConNota = 0;
-
-        for (Nota n : notas.values()) {
-            if (n != null) {
-                // Asumimos que 'getValor()' de la Nota es la nota final del curso
-                sumaTotal += n.getValor(); 
-                cursosConNota++;
-            }
-        }
-
-        return (cursosConNota > 0) ? (sumaTotal / cursosConNota) : 0.0;
-    }
-
-    /**
-     * Obtiene la nota (como un valor double) para un curso específico.
-     */
-    public double obtenerNotaCurso(Curso c) {
-        Nota n = notas.get(c); // Busca la Nota asociada al Curso
-        if (n != null) {
-            return n.getValor(); // Devuelve el valor de la nota
-        }
-        // Devuelve 0 o maneja el error si no hay nota o no está matriculado
-        return 0.0; 
-    }
-
-    /**
-     * Devuelve una lista de todos los cursos en los que el alumno está matriculado.
-     */
-    public List<Curso> listarCursos() {
-        // Devuelve una nueva lista con las "llaves" (Cursos) del mapa
-        return new ArrayList<>(notas.keySet());
-    }
-
-    /**
-     * Muestra la información básica del alumno.
-     */
     public void mostrarInformacion() {
-        System.out.println("--- Información del Alumno ---");
-        System.out.println("CUI: " + CUI);
+        System.out.println("ALUMNO");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("CUI: " + cui);
         System.out.println("Email: " + email);
         if (carrera != null) {
             System.out.println("Carrera: " + carrera.getNombre());
         }
-        System.out.println("Cursos Matriculados: " + notas.size());
-        System.out.println("Promedio General: " + this.promedioGeneral());
+    }
+
+    // Getters y Setters
+    public int getCUI() { 
+        return cui; }
+    public String getNombre() { 
+        return nombre; 
+    }
+    public String getEmail() { 
+        return email; 
+    }
+    public Map<Curso, Nota> getCursos() { 
+        return cursos; 
+    }
+    public Carrera getCarrera() { 
+        return carrera; 
+    }
+    public void setCarrera(Carrera carrera) { 
+        this.carrera = carrera; 
     }
 }
