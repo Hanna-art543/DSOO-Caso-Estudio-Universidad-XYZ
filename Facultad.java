@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+
 public class Facultad {
     private String nombre;
     private String decano;
     private Sucursal sucursal; 
     private List<Carrera> carreras;
+
     public Facultad(String nombre, String decano, Sucursal sucursal) {
         this.nombre = nombre;
         this.decano = decano;
@@ -14,6 +16,7 @@ public class Facultad {
     public boolean agregarCarrera(Carrera carrera) {
         if (!carreras.contains(carrera)) {
             carreras.add(carrera);
+            carrera.setFacultad(this);
             return true;
         }
         return false;
@@ -47,6 +50,8 @@ public class Facultad {
         System.out.println("Sucursal: " + (sucursal != null ? sucursal.getNombre() : "No asignada"));
         System.out.println("Número de carreras: " + carreras.size());
     }
+
+    //Métodos getters y setters
     public String getNombre() {
         return nombre;
     }
