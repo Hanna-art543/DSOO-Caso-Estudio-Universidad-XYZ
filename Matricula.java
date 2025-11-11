@@ -30,7 +30,7 @@ public class Matricula {
     }
 
     public void mostrarInformacion() {
-        System.out.println("====== MATRÍCULA ======");
+        System.out.println("MATRÍCULA");
         System.out.println("ID: " + id);
         System.out.println("Fecha: " + fecha); 
         String estadoTexto;
@@ -62,4 +62,5 @@ public class Matricula {
     public Carrera getCarrera() { 
         return carrera; 
     }
+
 }
