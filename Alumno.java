@@ -2,12 +2,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Alumno {
+    //ATRIBUTOS
     private int cui;
     private String nombre;
     private String email;
     private Map<Curso, Nota> cursos;
-    private Carrera carrera;
+    private Carrera carrera; //Asosiación
 
+    //Constructor de Instancia
     public Alumno(int cui, String nombre, String email) {
         this.cui = cui;
         this.nombre = nombre;
@@ -15,7 +17,9 @@ public class Alumno {
         this.cursos = new HashMap<>();
     }
 
+    // Método para inscribir al alumno en un curso
     public boolean matricularCurso(Curso c) {
+        //Verificamos si ya existe el curso
         if (!this.cursos.containsKey(c)) {
             this.cursos.put(c, new Nota(0.0)); // Inicia con nota 0
             return true;
@@ -25,6 +29,7 @@ public class Alumno {
 
     public void registrarNota(Curso c, double valorNota) {
         Nota nota;
+        // Verificamos si el alumno tiene ese curso matriculado
         if (this.cursos.containsKey(c)) {
             nota = this.cursos.get(c);
             nota.asignarValor(valorNota);
@@ -37,10 +42,11 @@ public class Alumno {
     }
 
     public double calcularPromedioGeneral() {
+        // Validación de seguridad
         if (cursos.isEmpty()) return 0.0;
         double suma = 0;
         for (Nota n : cursos.values()) {
-            suma += n.getValor();
+            suma += n.getValor(); 
         }
         return suma / cursos.size();
     }
