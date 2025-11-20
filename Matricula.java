@@ -1,13 +1,15 @@
 import java.time.LocalDate; 
 
 public class Matricula {
+    //Atributos
     private String id;
     private LocalDate fecha; 
     private boolean estado;
     private Alumno alumno;
     private Carrera carrera;
 
-    public Matricula(String id, LocalDate fecha, Alumno alumno, Carrera carrera) { // <-- MODIFICADO
+    //Constructor de Instancia
+    public Matricula(String id, LocalDate fecha, Alumno alumno, Carrera carrera) { 
         this.id = id;
         this.fecha = fecha; 
         this.alumno = alumno;
