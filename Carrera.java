@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Carrera {
+    //ATRIBUTOS
     private String nombre;
     private String codigo;
     private int duracion;
@@ -9,6 +10,7 @@ public class Carrera {
     private List<Curso> cursos;
     private List<Alumno> alumnos;
 
+    //CONSTRUCTOR DE INSTANCIA
     public Carrera(String nombre, String codigo, int duracion, Facultad facultad) {
         this.nombre = nombre;
         this.codigo = codigo;
@@ -18,6 +20,7 @@ public class Carrera {
         this.alumnos = new ArrayList<>();
     }
     public boolean agregarCurso(Curso curso) {
+        //Verifica que no esté el curso
         if (!cursos.contains(curso)) {
             cursos.add(curso);
             return true;
@@ -26,6 +29,7 @@ public class Carrera {
     }
 
     public boolean eliminarCurso(String codigo) {
+        // Comparamos códigos ignorando mayúsculas.
         for (Curso c : cursos) {
             if (c.getCodigo().equalsIgnoreCase(codigo)) {
                 cursos.remove(c);
@@ -52,6 +56,7 @@ public class Carrera {
 
     //Métodos para agregar, eliminar y listar alumnos
     public boolean agregarAlumno(Alumno alumno) {
+        //Verifica que no esté el alumno
         if (!alumnos.contains(alumno)) {
             alumnos.add(alumno);
             alumno.setCarrera(this); //Relacion
@@ -60,6 +65,7 @@ public class Carrera {
         return false;
     }
     public boolean eliminarAlumno(int cui) {
+        //Función lambda
         return this.alumnos.removeIf(a -> a.getCUI() == cui);
     }
 
