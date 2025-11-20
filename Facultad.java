@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Facultad {
+    //Atributos
     private String nombre;
     private String decano;
     private Sucursal sucursal; 
@@ -14,6 +15,7 @@ public class Facultad {
         this.carreras = new ArrayList<>();
     }
     public boolean agregarCarrera(Carrera carrera) {
+        // Verificamos que no esté repetida
         if (!carreras.contains(carrera)) {
             carreras.add(carrera);
             carrera.setFacultad(this);
@@ -22,6 +24,7 @@ public class Facultad {
         return false;
     }
     public boolean eliminarCarrera(String nombre) {
+        // Recorremos la lista buscando por el nombre
         for (Carrera c : carreras) {
             if (c.getNombre().equalsIgnoreCase(nombre)) {
                 carreras.remove(c);
@@ -47,7 +50,7 @@ public class Facultad {
     public void mostrarInformacion() {
         System.out.println("Facultad: " + nombre);
         System.out.println("Decano: " + decano);
-        System.out.println("Sucursal: " + (sucursal != null ? sucursal.getNombre() : "No asignada"));
+        System.out.println("Sucursal: " + (sucursal != null ? sucursal.getNombre() : "No asignada")); //Condición, verdadera: falsa
         System.out.println("Número de carreras: " + carreras.size());
     }
 
